@@ -10,6 +10,10 @@ const { bluetooth, destroy } = createBluetooth();
 const MQTT = require("async-mqtt");
 const crypto = require("crypto");
 
+const mqttOptions = {
+    user: process.env.MQTT_USER,
+    password: process.env.MQTT_PASSWORD
+}
 // prettier-ignore
 const key = Buffer.from([
   0x58, 0x21, 0xfa, 0x56, 0x01, 0xb2, 0xf0, 0x26,
@@ -267,7 +271,7 @@ process.once("SIGINT", () => {
       await adapter.stopDiscovery();
     }
 
-    mqttClient = await MQTT.connectAsync(`tcp://${config.mqttBroker}`);
+    mqttClient = await MQTT.connectAsync(`tcp://${config.mqttBroker}`, mqttOptions);
     log.info("Connected to MQTT broker at %s", `tcp://${config.mqttBroker}`);
 
     log.debug("Requesting characteristics from %s...", deviceName);
