@@ -30,7 +30,7 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: |
           docker build \
-            --tag thijsputman/tc66c-mqtt:"${GITHUB_SHA:0:7}" \
+            --tag "${GITHUB_REPOSITORY}:${GITHUB_SHA:0:7}" \
             --platform linux/arm64/v8,linux/arm/v7,linux/amd64 \
             --push \
             .
@@ -55,12 +55,12 @@ jobs:
           fi
           stable=()
           if [[ "$tag" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] ; then
-            stable=(--tag thijsputman/tc66c-mqtt:stable)
+            stable=(--tag ${GITHUB_REPOSITORY}:stable)
           fi
           docker build \
-            --tag thijsputman/tc66c-mqtt:"${GITHUB_SHA:0:7}" \
-            --tag thijsputman/tc66c-mqtt:latest \
-            --tag thijsputman/tc66c-mqtt:"$tag" "${stable[@]}" \
+            --tag "${GITHUB_REPOSITORY}:${GITHUB_SHA:0:7}" \
+            --tag ${GITHUB_REPOSITORY}:latest \
+            --tag "${GITHUB_REPOSITORY}:$tag" "${stable[@]}" \
             --platform linux/arm64/v8,linux/arm/v7,linux/amd64 \
             --push \
             .
