@@ -11,7 +11,7 @@ const MQTT = require("async-mqtt");
 const crypto = require("crypto");
 
 const mqttOptions = {
-    user: process.env.MQTT_USER,
+    username: process.env.MQTT_USER,
     password: process.env.MQTT_PASSWORD
 }
 // prettier-ignore
